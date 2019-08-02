@@ -10,9 +10,9 @@ The following is a plan that I’ve developed together with my mentor Vlad:
 
 
 * [**DONE**] Compile the cf-operator binary on the Z VM
-* [**IN PROGRESS**] Complete one feature of the cf-operator, to familiarize myself with the codebase (*Estimation 10th of July*)
-* Deploy the Cloud Foundry Operator on Kubernetes with and without Helm (*Estimation 20th of July*)
-* Build a stemcell docker image and a BOSH release on Z (*Estimation 3rd of August*)
+* [**DONE**] Complete one feature of the cf-operator, to familiarize myself with the codebase (*Estimation 10th of July*)
+* [**DONE**] Deploy the Cloud Foundry Operator on Kubernetes with and without Helm (*Estimation 20th of July*)
+* [**IN PROGRESS**] Build a stemcell docker image and a BOSH release on Z (*Estimation 3rd of August*)
 * Pipelines for automatically building the following on Z (*Estimation 1st of September*):
   * Cloud Foundry Operator
   * Stemcell image(s)
