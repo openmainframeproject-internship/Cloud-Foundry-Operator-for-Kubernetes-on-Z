@@ -4,10 +4,14 @@
 ## Table of Contents
 * [Introduction](#Introduction)
 * [Project Plan](#Project-Plan)
-* [Launch](#Launch)
 * [Implementation](#Implementation)
 ## Introduction
 This project builds the Cloud Foundry Operator on Z using [Fissile](https://github.com/cloudfoundry-incubator/fissile).
+
+Docker images:
+* [cf-operator](https://hub.docker.com/r/quarkz/cf-operator)
+* [nats](https://hub.docker.com/r/quarkz/nats)
+* [s390x-opensuse-stemcell](https://hub.docker.com/r/quarkz/s390x-opensuse-stemcell)
 ## Project Plan
 ### Outcome: Build Cloud Foundry Operator on Z
 
@@ -26,9 +30,6 @@ The following is a plan that I’ve developed together with my mentor Vlad:
   * Cloud Foundry Operator
   * Stemcell image(s)
   * BOSH releases
-
-## Launch
-* Jenkins:
 
 ## Implementation
 The main objective was to implement the Cloud Foundry Operator on Z. In order to achieve this we had to follow a few steps:
