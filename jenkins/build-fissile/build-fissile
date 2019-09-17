@@ -1,0 +1,22 @@
+set -e
+
+export GOROOT=$HOME/go
+export GOPATH=$HOME/go/gopath
+export PATH=$PATH:$GOBIN:usr/bin:$GOROOT/bin:$GOPATH/bin:$HOME/dockerfiles-sh
+export GOBIN=$GOROOT/bin
+
+export JAVA_HOME=/usr/bin/java
+export PATH=$JAVA_HOME/bin:$PATH
+
+export GOPATH=`mktemp -d`
+mkdir -p $GOPATH/src/code.cloudfoundry.org/
+ln -s `pwd` $GOPATH/src/code.cloudfoundry.org/fissile
+cp -r vendor/* $GOPATH/src
+rm -rf vendor
+OSES=linux make build
+build/linux-s390x/fissile
+
+GIT_ROOT=${GIT_ROOT:-$(git rev-parse --show-toplevel)}
+. ${GIT_ROOT}/make/include/versioning
+
+tar -czvf "build/linux-s390x/fissile-${ARTIFACT_VERSION}.tgz" build/linux-s390x/fissile

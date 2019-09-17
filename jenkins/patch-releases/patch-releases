@@ -1,0 +1,38 @@
+export PATH=$PATH:/home/linux1/.jenkins/jobs/fissile/workspace/build/linux-s390x
+
+ls -la
+
+./run-quarks-patches.sh \
+  "nats" "27" \
+  'https://bosh.io/d/github.com/cloudfoundry/nats-release?v=27' \
+  "$HOME/fissile-workspace/patches" \
+  "$HOME/fissile-workspace/output"
+
+#rm -rf $HOME/.final-releases
+#rm -rf "$HOME/tmp-fissile-workdir/"
+mkdir -p "$HOME/tmp-fissile-workdir/"
+
+docker_org="quarkz"
+release_name="nats"
+release_version="27"
+stemcell_image="quarkz/s390x-opensuse-stemcell"
+stemcell_tag="0.0.15"
+
+# Use fissile to build the nats release.
+# TODO: this should download a configurable fissile build
+# The stemcell should also be configurable
+fissile build release-images \
+  --docker-organization="$docker_org" \
+  --work-dir="$HOME/tmp-fissile-workdir/" \
+  --stemcell="$stemcell_image:$stemcell_tag" \
+  --name="$release_name" \
+  --version="$release_version" \
+  --url='file:///home/linux1/fissile-workspace/output/nats.tar.gz' \
+  --sha1="9817e8e460b8619a99a0a0fbec8220dc12b2a6f5" \
+  -W 1 -V
+
+docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+stemcell_flavor=`docker inspect --format '{{ index .Config.Labels "stemcell-flavor"}}' "$stemcell_image:$stemcell_tag"`
+fissile_version=`fissile version | sed s/fissile-//g | sed s/+/_/g`
+image="$docker_org/$release_name:$stemcell_flavor-$stemcell_tag-$fissile_version-$release_version"
+docker push "${image}"

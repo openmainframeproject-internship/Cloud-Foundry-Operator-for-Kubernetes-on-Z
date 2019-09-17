@@ -1,0 +1,26 @@
+et -e
+
+docker pull opensuse/tumbleweed
+docker tag opensuse/tumbleweed opensuse/leap:15.1
+
+GIT_ROOT="${GIT_ROOT:-$(git rev-parse --show-toplevel)}"
+. "${GIT_ROOT}/bin/include/versioning"
+. "${GIT_ROOT}/.envrc"
+
+DOCKER_IMAGE_TAG=${VERSION_TAG}
+DOCKER_IMAGE_ORG="quarkz"
+export DOCKER_IMAGE_TAG
+
+
+image="${DOCKER_IMAGE_ORG}/cf-operator:${DOCKER_IMAGE_TAG}"
+
+docker build "${GIT_ROOT}" \
+  --file "${GIT_ROOT}/Dockerfile-s390x" \
+  --build-arg GO111MODULE="${GO111MODULE:-on}" \
+  --tag "${image}"
+
+docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+
+docker push "${image}"
+
+make build-helm

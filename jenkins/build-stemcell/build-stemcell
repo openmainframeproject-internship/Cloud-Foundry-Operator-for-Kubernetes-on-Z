@@ -1,0 +1,9 @@
+stemcell_version="0.0.$BUILD_NUMBER"
+
+docker build -t "quarkz/s390x-opensuse-stemcell:$stemcell_version" \
+  --build-arg base_image=opensuse/tumbleweed \
+  --build-arg stemcell_version="$stemcell_version" .
+  
+docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+
+docker push "quarkz/s390x-opensuse-stemcell:$stemcell_version"
