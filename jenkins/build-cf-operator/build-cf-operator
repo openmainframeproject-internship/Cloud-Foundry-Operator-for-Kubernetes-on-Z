@@ -1,4 +1,4 @@
-et -e
+set -e
 
 docker pull opensuse/tumbleweed
 docker tag opensuse/tumbleweed opensuse/leap:15.1
